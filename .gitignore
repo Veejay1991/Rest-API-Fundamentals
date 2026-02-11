@@ -1,0 +1,25 @@
+# Client
+Client/node_modules/
+Client/dist/
+Client/.angular/
+Client/package-lock.json
+Client/tmp/
+Client/out-tsc/
+Client/coverage/
+
+# Server
+Server/StockManagement/bin/
+Server/StockManagement/obj/
+Server/StockManagement/*.user
+
+# IDE
+.vs/
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
