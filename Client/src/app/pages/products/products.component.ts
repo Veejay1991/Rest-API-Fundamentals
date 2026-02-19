@@ -610,7 +610,7 @@ export class ProductsComponent implements OnInit {
   successMessage = '';
 
   // API Panel Toggle
-  showApiPanel = false;
+  showApiPanel = true;
 
   // API Request Info Panel
   apiRequestInfo: ApiRequestInfo | null = null;
