@@ -42,19 +42,19 @@ interface ApiRequestInfo {
       <!-- Left Column - Products -->
       <div class="left-column">
         <!-- Loading State -->
-        <div *ngIf="loading" class="loading-overlay">
+        <div *ngif="loading" class="loading-overlay">
           <div class="spinner"></div>
         </div>
 
         <!-- Error State -->
-        <div *ngIf="error" class="alert alert-danger">
+        <div *ngif="error" class="alert alert-danger">
           <span class="material-icons">error</span>
           {{ error }}
           <button class="btn btn-sm btn-danger" (click)="loadProducts()">Retry</button>
         </div>
 
         <!-- Success Message -->
-        <div *ngIf="successMessage" class="alert alert-success">
+        <div *ngif="successMessage" class="alert alert-success">
           <span class="material-icons">check_circle</span>
           {{ successMessage }}
         </div>
@@ -96,7 +96,7 @@ interface ApiRequestInfo {
                     </div>
                   </td>
                 </tr>
-                <tr *ngIf="products.length === 0 && !loading">
+                <tr *ngif="products.length === 0 && !loading">
                   <td colspan="4" class="text-center text-muted" style="padding: 2rem;">
                     No products found
                   </td>
@@ -108,18 +108,18 @@ interface ApiRequestInfo {
       </div>
 
       <!-- Right Column - API Request Details -->
-      <div class="right-column" *ngIf="showApiPanel">
+      <div class="right-column" *ngif="showApiPanel">
         <div class="api-info-panel sticky">
           <div class="api-info-header">
             <h4>
               <span class="material-icons">code</span>
               API Request/Response
             </h4>
-            <button *ngIf="apiRequestInfo" class="btn btn-icon" (click)="clearApiInfo()" title="Clear">
+            <button *ngif="apiRequestInfo" class="btn btn-icon" (click)="clearApiInfo()" title="Clear">
               <span class="material-icons">refresh</span>
             </button>
           </div>
-          <div class="api-info-content" *ngIf="apiRequestInfo">
+          <div class="api-info-content" *ngif="apiRequestInfo">
             <div class="api-section">
               <div class="api-label">Method & URL</div>
               <div class="api-value">
@@ -131,7 +131,7 @@ interface ApiRequestInfo {
               <div class="api-label">Headers</div>
               <pre class="api-code">{{ apiRequestInfo.headers | json }}</pre>
             </div>
-            <div class="api-section" *ngIf="apiRequestInfo.body">
+            <div class="api-section" *ngif="apiRequestInfo.body">
               <div class="api-label">Request Body</div>
               <pre class="api-code">{{ apiRequestInfo.body | json }}</pre>
             </div>
@@ -140,7 +140,7 @@ interface ApiRequestInfo {
               <pre class="api-code response">{{ apiRequestInfo.response | json }}</pre>
             </div>
           </div>
-          <div class="api-info-empty" *ngIf="!apiRequestInfo">
+          <div class="api-info-empty" *ngif="!apiRequestInfo">
             <span class="material-icons">touch_app</span>
             <p>Perform an action to see API request/response details</p>
             <div class="action-hints">
@@ -156,7 +156,7 @@ interface ApiRequestInfo {
     </div>
 
     <!-- View Product Modal (GET by ID) -->
-    <div *ngIf="showViewModal" class="modal-backdrop" (click)="closeViewModal()">
+    <div *ngif="showViewModal" class="modal-backdrop" (click)="closeViewModal()">
       <div class="modal" (click)="$event.stopPropagation()">
         <div class="modal-header">
           <h3>Product Details (GET /api/products/{{ viewingProduct?.id }})</h3>
@@ -197,7 +197,7 @@ interface ApiRequestInfo {
     </div>
 
     <!-- Create/Edit Modal (POST/PUT) -->
-    <div *ngIf="showModal" class="modal-backdrop" (click)="closeModal()">
+    <div *ngif="showModal" class="modal-backdrop" (click)="closeModal()">
       <div class="modal" style="max-width: 500px;" (click)="$event.stopPropagation()">
         <div class="modal-header">
           <h3>{{ editingProduct ? 'Edit Product (PUT)' : 'Create Product (POST)' }}</h3>
@@ -206,11 +206,11 @@ interface ApiRequestInfo {
           </button>
         </div>
         <div class="modal-body">
-          <p class="method-info" *ngIf="editingProduct">
+          <p class="method-info" *ngif="editingProduct">
             <span class="method-badge put">PUT</span> 
             requires all fields to be provided (full update)
           </p>
-          <p class="method-info" *ngIf="!editingProduct">
+          <p class="method-info" *ngif="!editingProduct">
             <span class="method-badge post">POST</span> 
             creates a new resource with provided data
           </p>
@@ -245,7 +245,7 @@ interface ApiRequestInfo {
     </div>
 
     <!-- PATCH Modal -->
-    <div *ngIf="showPatchModal" class="modal-backdrop" (click)="closePatchModal()">
+    <div *ngif="showPatchModal" class="modal-backdrop" (click)="closePatchModal()">
       <div class="modal" style="max-width: 500px;" (click)="$event.stopPropagation()">
         <div class="modal-header">
           <h3>Partial Update (PATCH /api/products/{{ patchingProduct?.id }})</h3>
