@@ -1,0 +1,292 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  margin-bottom: 0.25rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.btn-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  color: var(--gray-600);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-toggle:hover {
+  background: var(--gray-200);
+  color: var(--gray-800);
+}
+
+.btn-toggle.active {
+  background: #1e293b;
+  border-color: #1e293b;
+  color: white;
+}
+
+.btn-toggle .material-icons {
+  font-size: 1.125rem;
+}
+
+/* Two Column Layout */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 1.5rem;
+}
+
+.main-layout.single-column {
+  grid-template-columns: 1fr;
+}
+
+.left-column {
+  min-width: 0;
+}
+
+.right-column {
+  min-width: 0;
+}
+
+.sticky {
+  position: sticky;
+  top: 1rem;
+}
+
+code {
+  background: var(--gray-100);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.btn-get { color: #2196F3; }
+.btn-put { color: #FF9800; }
+.btn-patch { color: #9C27B0; }
+.btn-delete { color: #F44336; }
+
+.detail-row {
+  display: flex;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.detail-row label {
+  font-weight: 600;
+  width: 120px;
+  color: var(--gray-600);
+}
+
+.detail-row span {
+  flex: 1;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+/* API Info Panel Styles */
+.api-info-panel {
+  background: #1e293b;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.api-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #0f172a;
+  color: white;
+}
+
+.api-info-header h4 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.api-info-header .btn-icon {
+  color: white;
+}
+
+.api-info-content {
+  padding: 1rem;
+}
+
+.api-section {
+  margin-bottom: 1rem;
+}
+
+.api-section:last-child {
+  margin-bottom: 0;
+}
+
+.api-label {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+}
+
+.api-value {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+}
+
+.api-value code {
+  background: #334155;
+  color: #e2e8f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875rem;
+}
+
+.api-code {
+  background: #334155;
+  color: #e2e8f0;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  margin: 0;
+  overflow-x: auto;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.api-code.response {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+
+.method-badge {
+  display: inline-flex;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.method-badge.get { background: #2196F3; color: white; }
+.method-badge.post { background: #4CAF50; color: white; }
+.method-badge.put { background: #FF9800; color: white; }
+.method-badge.patch { background: #9C27B0; color: white; }
+.method-badge.delete { background: #F44336; color: white; }
+
+/* Method info in modals */
+.method-info {
+  background: var(--gray-50);
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* PATCH Modal */
+.patch-field {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--gray-50);
+  border-radius: 6px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.patch-field .form-control:disabled {
+  opacity: 0.5;
+}
+
+/* API Info Empty State */
+.api-info-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.api-info-empty .material-icons {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.api-info-empty p {
+  margin: 0 0 1.5rem 0;
+  font-size: 0.875rem;
+}
+
+.action-hints {
+  text-align: left;
+  font-size: 0.75rem;
+}
+
+.action-hints > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid #334155;
+}
+
+.action-hints > div:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .right-column {
+    order: -1;
+  }
+
+  .sticky {
+    position: static;
+  }
+}
