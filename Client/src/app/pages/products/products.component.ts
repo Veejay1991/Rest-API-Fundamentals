@@ -609,7 +609,7 @@ export class ProductsComponent implements OnInit {
   error = '';
   successMessage = '';
 
-  // API Panel Toggle
+  // API Panel Toggle - Default to visible to showcase API details
   showApiPanel = true;
 
   // API Request Info Panel
