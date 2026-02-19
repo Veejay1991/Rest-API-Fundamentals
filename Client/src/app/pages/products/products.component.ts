@@ -609,8 +609,8 @@ export class ProductsComponent implements OnInit {
   error = '';
   successMessage = '';
 
-  // API Panel Toggle
-  showApiPanel = false;
+  // API Panel Toggle - Show by default for educational purposes
+  showApiPanel = true;
 
   // API Request Info Panel
   apiRequestInfo: ApiRequestInfo | null = null;
