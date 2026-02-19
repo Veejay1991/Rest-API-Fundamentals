@@ -108,9 +108,10 @@ interface ApiRequestInfo {
       </div>
 
       <!-- Right Column - API Request Details -->
-      <div class="right-column" *ngIf="showApiPanel">
-        <div class="api-info-panel sticky">
-          <div class="api-info-header">
+      <ng-container *ngIf="showApiPanel">
+        <div class="right-column">
+          <div class="api-info-panel sticky">
+            <div class="api-info-header">
             <h4>
               <span class="material-icons">code</span>
               API Request/Response
@@ -153,6 +154,7 @@ interface ApiRequestInfo {
           </div>
         </div>
       </div>
+      </ng-container>
     </div>
 
     <!-- View Product Modal (GET by ID) -->
