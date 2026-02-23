@@ -21,6 +21,5 @@ jobs:
         run: |
           # 1. Compile first
           gh aw compile .github/workflows/jira-bug-fix.md
-          
-         # 2. Trigger the compiled workflow using standard gh cli, piping the JSON payload 
+          # 2. Trigger the compiled workflow using standard gh cli, piping the JSON payload 
           gh aw run jira-bug-fix
