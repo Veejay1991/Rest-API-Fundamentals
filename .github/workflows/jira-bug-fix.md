@@ -9,7 +9,7 @@ permissions:
   contents: read
   pull-requests: read
 safe-outputs:
-  create-pull-request: true
+  create-pull-request: {}
 ---
 
 # Instructions
