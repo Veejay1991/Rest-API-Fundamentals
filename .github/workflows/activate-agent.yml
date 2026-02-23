@@ -13,13 +13,12 @@ jobs:
       - name: Install gh-aw CLI
         uses: github/gh-aw/actions/setup-cli@main # Official setup action
 
-      - name: Compile Jira Bug Fix Workflow
-        run: |
-          gh aw compile jira-bug-fix.md
-
       - name: Run Coding Agent
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Execute the agent with the Jira payload
-          gh aw run jira-bug-fix
+          # 1. Compile first
+          gh aw compile .github/workflows/jira-bug-fix.md
+          
+          # 2. Run with positional payload (no flag needed)
+          gh aw run jira-bug-fix '${{ toJson(github.event.client_payload) }}'
