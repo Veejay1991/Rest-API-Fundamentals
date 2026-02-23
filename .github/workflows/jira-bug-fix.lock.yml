@@ -23,11 +23,24 @@
 #
 # Fixes a bug reported in Jira against a specific branch
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"ddb1a9d230f81454342f972110b5a1a9e0377faf74e879fffa851ac77127119f","compiler_version":"v0.49.3"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"b3dbf0db98800f61ec888550caf1cbc61402501fef9256f91654826484c7b582","compiler_version":"v0.49.3"}
 
 name: "jira-bug-fix"
 "on":
   workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to checkout
+        required: true
+        type: string
+      description:
+        description: Jira bug description
+        required: true
+        type: string
+      issue_key:
+        description: Jira Issue Key
+        required: true
+        type: string
 
 permissions: {}
 
@@ -79,9 +92,6 @@ jobs:
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
           GH_AW_SAFE_OUTPUTS: ${{ env.GH_AW_SAFE_OUTPUTS }}
-          GH_AW_ENV_BRANCH: ${{ env.BRANCH }}
-          GH_AW_ENV_DESCRIPTION: ${{ env.DESCRIPTION }}
-          GH_AW_ENV_ISSUE_KEY: ${{ env.ISSUE_KEY }}
           GH_AW_GITHUB_ACTOR: ${{ github.actor }}
           GH_AW_GITHUB_EVENT_COMMENT_ID: ${{ github.event.comment.id }}
           GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
@@ -90,6 +100,9 @@ jobs:
           GH_AW_GITHUB_REPOSITORY: ${{ github.repository }}
           GH_AW_GITHUB_RUN_ID: ${{ github.run_id }}
           GH_AW_GITHUB_WORKSPACE: ${{ github.workspace }}
+          GH_AW_INPUTS_BRANCH: ${{ inputs.branch }}
+          GH_AW_INPUTS_DESCRIPTION: ${{ inputs.description }}
+          GH_AW_INPUTS_ISSUE_KEY: ${{ inputs.issue_key }}
         run: |
           bash /opt/gh-aw/actions/create_prompt_first.sh
           {
@@ -147,9 +160,9 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
-          GH_AW_ENV_BRANCH: ${{ env.BRANCH }}
-          GH_AW_ENV_DESCRIPTION: ${{ env.DESCRIPTION }}
-          GH_AW_ENV_ISSUE_KEY: ${{ env.ISSUE_KEY }}
+          GH_AW_INPUTS_BRANCH: ${{ inputs.branch }}
+          GH_AW_INPUTS_DESCRIPTION: ${{ inputs.description }}
+          GH_AW_INPUTS_ISSUE_KEY: ${{ inputs.issue_key }}
         with:
           script: |
             const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
@@ -160,9 +173,6 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
-          GH_AW_ENV_BRANCH: ${{ env.BRANCH }}
-          GH_AW_ENV_DESCRIPTION: ${{ env.DESCRIPTION }}
-          GH_AW_ENV_ISSUE_KEY: ${{ env.ISSUE_KEY }}
           GH_AW_GITHUB_ACTOR: ${{ github.actor }}
           GH_AW_GITHUB_EVENT_COMMENT_ID: ${{ github.event.comment.id }}
           GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
@@ -171,6 +181,9 @@ jobs:
           GH_AW_GITHUB_REPOSITORY: ${{ github.repository }}
           GH_AW_GITHUB_RUN_ID: ${{ github.run_id }}
           GH_AW_GITHUB_WORKSPACE: ${{ github.workspace }}
+          GH_AW_INPUTS_BRANCH: ${{ inputs.branch }}
+          GH_AW_INPUTS_DESCRIPTION: ${{ inputs.description }}
+          GH_AW_INPUTS_ISSUE_KEY: ${{ inputs.issue_key }}
         with:
           script: |
             const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
@@ -182,9 +195,6 @@ jobs:
             return await substitutePlaceholders({
               file: process.env.GH_AW_PROMPT,
               substitutions: {
-                GH_AW_ENV_BRANCH: process.env.GH_AW_ENV_BRANCH,
-                GH_AW_ENV_DESCRIPTION: process.env.GH_AW_ENV_DESCRIPTION,
-                GH_AW_ENV_ISSUE_KEY: process.env.GH_AW_ENV_ISSUE_KEY,
                 GH_AW_GITHUB_ACTOR: process.env.GH_AW_GITHUB_ACTOR,
                 GH_AW_GITHUB_EVENT_COMMENT_ID: process.env.GH_AW_GITHUB_EVENT_COMMENT_ID,
                 GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: process.env.GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER,
@@ -192,7 +202,10 @@ jobs:
                 GH_AW_GITHUB_EVENT_PULL_REQUEST_NUMBER: process.env.GH_AW_GITHUB_EVENT_PULL_REQUEST_NUMBER,
                 GH_AW_GITHUB_REPOSITORY: process.env.GH_AW_GITHUB_REPOSITORY,
                 GH_AW_GITHUB_RUN_ID: process.env.GH_AW_GITHUB_RUN_ID,
-                GH_AW_GITHUB_WORKSPACE: process.env.GH_AW_GITHUB_WORKSPACE
+                GH_AW_GITHUB_WORKSPACE: process.env.GH_AW_GITHUB_WORKSPACE,
+                GH_AW_INPUTS_BRANCH: process.env.GH_AW_INPUTS_BRANCH,
+                GH_AW_INPUTS_DESCRIPTION: process.env.GH_AW_INPUTS_DESCRIPTION,
+                GH_AW_INPUTS_ISSUE_KEY: process.env.GH_AW_INPUTS_ISSUE_KEY
               }
             });
       - name: Validate prompt placeholders
