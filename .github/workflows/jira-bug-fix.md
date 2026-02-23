@@ -5,21 +5,21 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch to checkout'
+        description: "Branch to checkout"
         required: true
         type: string
       description:
-        description: 'Jira bug description'
+        description: "Jira bug description"
         required: true
         type: string
       issue_key:
-        description: 'Jira Issue Key'
+        description: "Jira Issue Key"
         required: true
         type: string
+env:
+  GH_AW_MODEL_AGENT_COPILOT: gpt-4o
 description: Fixes a bug reported in Jira against a specific branch
-engine: 
-  id: copilot
-  model: gpt-4o
+engine: copilot
 permissions:
   contents: read
   pull-requests: read
