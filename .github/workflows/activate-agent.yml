@@ -25,4 +25,4 @@ jobs:
           gh aw compile .github/workflows/jira-bug-fix.md
           
           # 2. Run the local compiled workflow, passing inputs via -f (field) flags
-          gh aw run jira-bug-fix -f branch="$BRANCH" -f description="$DESC" -f issue_key="$ISSUE_KEY"
+          gh aw run jira-bug-fix branch="$BRANCH" -f description="$DESC" -f issue_key="$ISSUE_KEY"
