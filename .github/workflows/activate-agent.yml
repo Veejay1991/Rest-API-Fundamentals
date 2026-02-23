@@ -1,11 +1,7 @@
 name: Activate GitHub Coding Agent
 on:
   repository_dispatch:
-    types: [jira-bug-report] 
-
-permissions:
-  contents: write 
-  actions: write  
+    types: [jira-bug-report] # Matches the 'event_type' from Jira
 
 jobs:
   run-agent:
@@ -13,30 +9,19 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          # This injects your PAT into Git, allowing it to push to .github/workflows/
-          token: ${{ secrets.PAT_WORKFLOW }} 
 
       - name: Install gh-aw CLI
-        uses: github/gh-aw/actions/setup-cli@main
+        uses: github/gh-aw/actions/setup-cli@main # Official setup action
 
       - name: Run Coding Agent
         env:
-          # The GitHub CLI also needs your PAT to trigger the newly created workflow
-          GH_TOKEN: ${{ secrets.PAT_WORKFLOW }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.event.client_payload.branch }}
-          DESC: ${{ github.event.client_payload.description }}
+          BUG_DESC: ${{ github.event.client_payload.description }}
           ISSUE_KEY: ${{ github.event.client_payload.issue_key }}
         run: |
-          # 1. Compile the markdown file
-          gh aw compile .github/workflows/jira-bug-fix.md
+          # Compile the MD intent into an executable Action
+          gh aw compile jira-bug-fix.md 
           
-          # 2. Commit and push the generated lock file
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .github/workflows/jira-bug-fix.lock.yml
-          git commit -m "chore: compile agent lock file" || echo "Lock file is already up to date"
-          git push
-          
-          # 3. Trigger the workflow using the native CLI
-          gh workflow run jira-bug-fix.lock.yml -f branch="$BRANCH" -f description="$DESC" -f issue_key="$ISSUE_KEY"
+          # Execute the agent with the Jira payload
+          gh aw run jira-bug-fix
