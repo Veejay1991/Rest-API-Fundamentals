@@ -1,4 +1,8 @@
 ---
+name: jira-bug-fix
+# Add an empty 'on' trigger to satisfy the GitHub Actions compiler
+on:
+  workflow_dispatch: 
 description: Fixes a bug reported in Jira against a specific branch
 engine: copilot # Uses your GHE Copilot license
 permissions:
