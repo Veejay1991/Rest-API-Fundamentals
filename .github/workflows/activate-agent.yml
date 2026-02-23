@@ -15,9 +15,6 @@ jobs:
 
       - name: Run Coding Agent
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
-          GH_AW_MODEL_AGENT_COPILOT: gpt-4o
           BRANCH: ${{ github.event.client_payload.branch }}
           DESC: ${{ github.event.client_payload.description }}
           ISSUE_KEY: ${{ github.event.client_payload.issue_key }}
