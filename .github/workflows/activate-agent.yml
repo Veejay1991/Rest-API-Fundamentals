@@ -16,13 +16,19 @@ jobs:
       - name: Run Coding Agent
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Map the payload directly to environment variables to handle multiline strings safely
           BRANCH: ${{ github.event.client_payload.branch }}
           DESC: ${{ github.event.client_payload.description }}
           ISSUE_KEY: ${{ github.event.client_payload.issue_key }}
         run: |
-          # 1. Compile the local markdown file
+          # 1. Compile the markdown file
           gh aw compile .github/workflows/jira-bug-fix.md
           
-          # 2. Run the local compiled workflow, passing inputs via -f (field) flags
-          gh aw run jira-bug-fix branch="$BRANCH" description="$DESC" issue_key="$ISSUE_KEY"
+          # 2. Commit and push the generated lock file so the GitHub API can see it
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/jira-bug-fix.lock.yml
+          git commit -m "chore: compile agent lock file" || echo "Lock file is already up to date"
+          git push
+          
+          # 3. Now we can safely use standard 'gh workflow run' which supports -f flags!
+          gh workflow run jira-bug-fix.lock.yml -f branch="$BRANCH" -f description="$DESC" -f issue_key="$ISSUE_KEY"
