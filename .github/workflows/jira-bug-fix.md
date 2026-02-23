@@ -27,8 +27,8 @@ safe-outputs:
 
 # Instructions
 
-1. Check out the branch provided: `${{ inputs.branch }}`.
-2. Read the bug description: `${{ inputs.description }}`.
+1. Check out the branch provided: `${{ env.BRANCH }}`.
+2. Read the bug description: `${{ env.DESCRIPTION }}`.
 3. Analyze the code in the branch and implement a fix for the described issue.
-4. Create a new branch named `fix/${{ inputs.issue_key }}`.
+4. Create a new branch named `fix/${{ env.ISSUE_KEY }}`.
 5. Commit the changes and open a Pull Request against the original testing branch.
