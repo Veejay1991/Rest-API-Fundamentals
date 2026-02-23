@@ -32,5 +32,5 @@ You are currently on the branch where the bug exists.
 1. Read the bug description: `${{ inputs.description }}`.
 2. Analyze the code and implement a fix for the described issue.
 3. Create a new local branch named `fix/${{ inputs.issue_key }}`.
-4. `git add` and `git commit` your changes. (Do not change git user/email configurations).
+4. `git add` and `git commit` your changes.
 5. Use the `create_pull_request` tool to open a Pull Request.
