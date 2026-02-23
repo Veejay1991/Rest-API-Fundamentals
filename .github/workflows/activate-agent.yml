@@ -24,4 +24,4 @@ jobs:
           gh aw compile jira-bug-fix.md 
           
           # Execute the agent with the Jira payload
-          gh aw run jira-bug-fix --force
+          yes | gh aw run jira-bug-fix
