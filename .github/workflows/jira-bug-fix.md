@@ -6,7 +6,10 @@ on:
 description: Fixes a bug reported in Jira against a specific branch
 engine: copilot # Uses your GHE Copilot license
 permissions:
-  safe-outputs.create-pull-request: write
+  contents: read
+  pull-requests: read
+safe-outputs:
+  create-pull-request: true
 ---
 
 # Instructions
