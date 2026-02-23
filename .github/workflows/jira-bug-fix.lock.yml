@@ -23,7 +23,7 @@
 #
 # Fixes a bug reported in Jira against a specific branch
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"53f299a26ad5a11f166e84147911c6e91dcac1affaa59b04a2058405a9d5225f","compiler_version":"v0.49.3"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"3a7549fdbe582b7938ca9e41af95bdc6c37e29ce4892ced29ec59025ca0dff49","compiler_version":"v0.49.3"}
 
 name: "jira-bug-fix"
 "on":
@@ -48,9 +48,6 @@ concurrency:
   group: "gh-aw-${{ github.workflow }}"
 
 run-name: "jira-bug-fix"
-
-env:
-  GH_AW_MODEL_AGENT_COPILOT: gpt-4o
 
 jobs:
   activation:

@@ -16,8 +16,6 @@ on:
         description: "Jira Issue Key"
         required: true
         type: string
-env:
-  GH_AW_MODEL_AGENT_COPILOT: gpt-4o
 description: Fixes a bug reported in Jira against a specific branch
 engine: copilot
 permissions:
