@@ -16,7 +16,7 @@ jobs:
       - name: Run Coding Agent
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
           BRANCH: ${{ github.event.client_payload.branch }}
           DESC: ${{ github.event.client_payload.description }}
           ISSUE_KEY: ${{ github.event.client_payload.issue_key }}
