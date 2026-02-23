@@ -17,7 +17,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.event.client_payload.branch }}
-          BUG_DESC: ${{ github.event.client_payload.description }}
+          DESCRIPTION: ${{ github.event.client_payload.description }}
           ISSUE_KEY: ${{ github.event.client_payload.issue_key }}
         run: |
           # Compile the MD intent into an executable Action
