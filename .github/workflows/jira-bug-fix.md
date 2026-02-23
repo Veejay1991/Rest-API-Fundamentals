@@ -27,8 +27,10 @@ safe-outputs:
 
 # Instructions
 
-1. Check out the branch provided: `${{ inputs.branch }}`.
-2. Read the bug description: `${{ inputs.description }}`.
-3. Analyze the code in the branch and implement a fix for the described issue.
-4. Create a new branch named `fix/${{ inputs.issue_key }}`.
-5. Commit the changes and open a Pull Request against the original testing branch.
+You are currently on the branch where the bug exists.
+
+1. Read the bug description: `${{ inputs.description }}`.
+2. Analyze the code and implement a fix for the described issue.
+3. Create a new local branch named `fix/${{ inputs.issue_key }}`.
+4. `git add` and `git commit` your changes. (Do not change git user/email configurations).
+5. Use the `create_pull_request` tool to open a Pull Request.
