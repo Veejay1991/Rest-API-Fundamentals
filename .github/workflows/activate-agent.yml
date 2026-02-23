@@ -17,9 +17,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Safely store the JSON payload in an environment variable to prevent quote-escaping errors in bash
-          AGENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+          PAYLOAD_JSON: ${{ toJson(github.event.client_payload) }}
         run: |
           # 1. Compile first
           gh aw compile .github/workflows/jira-bug-fix.md
           # 2. Trigger the compiled workflow using standard gh cli, piping the JSON payload 
-          gh aw run jira-bug-fix
+          echo "$PAYLOAD_JSON" | gh workflow run jira-bug-fix.lock.yml --json
