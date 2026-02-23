@@ -16,10 +16,13 @@ jobs:
       - name: Run Coding Agent
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Safely store the JSON payload in an environment variable to prevent quote-escaping errors in bash
-          PAYLOAD_JSON: ${{ toJson(github.event.client_payload) }}
+          # Map the payload directly to environment variables to handle multiline strings safely
+          BRANCH: ${{ github.event.client_payload.branch }}
+          DESC: ${{ github.event.client_payload.description }}
+          ISSUE_KEY: ${{ github.event.client_payload.issue_key }}
         run: |
-          # 1. Compile first
+          # 1. Compile the local markdown file
           gh aw compile .github/workflows/jira-bug-fix.md
-          # 2. Trigger the compiled workflow using standard gh cli, piping the JSON payload 
-          echo "$PAYLOAD_JSON" | gh workflow run jira-bug-fix.lock.yml --json
+          
+          # 2. Run the local compiled workflow, passing inputs via -f (field) flags
+          gh aw run jira-bug-fix -f branch="$BRANCH" -f description="$DESC" -f issue_key="$ISSUE_KEY"
