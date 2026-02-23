@@ -1,5 +1,4 @@
 ---
-name: jira-bug-fix
 description: Fixes a bug reported in Jira against a specific branch
 engine: copilot # Uses your GHE Copilot license
 permissions:
