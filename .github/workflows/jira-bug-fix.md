@@ -17,9 +17,9 @@ on:
         required: true
         type: string
 description: Fixes a bug reported in Jira against a specific branch
-engine: copilot
-env:
-  GH_AW_MODEL_AGENT_COPILOT: gpt-4o
+engine: 
+  id: copilot
+  model: gpt-4o
 permissions:
   contents: read
   pull-requests: read
