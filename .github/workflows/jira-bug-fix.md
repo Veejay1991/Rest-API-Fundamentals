@@ -17,7 +17,7 @@ on:
         required: true
         type: string
 description: Fixes a bug reported in Jira against a specific branch
-engine: codex
+engine: gemini
 permissions:
   contents: read
   pull-requests: read
