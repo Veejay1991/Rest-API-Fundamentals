@@ -41,10 +41,7 @@ jobs:
           RUN_ID=""
           for i in {1..12}; do
             sleep 5
-            
-            # Fetch the absolute latest workflow_dispatch run, ignoring branch string mismatches
             RUN_ID=$(gh run list --workflow="jira-bug-fix" --event="workflow_dispatch" --limit 1 --json databaseId -q '.[0].databaseId')
-            
             if [ -n "$RUN_ID" ] && [ "$RUN_ID" != "null" ]; then
               echo "Found Run ID: $RUN_ID"
               break
@@ -57,14 +54,32 @@ jobs:
             exit 1
           fi
           
-          # 3. Watch the run until the AI agent finishes
+          # 3. Custom Resilient Polling Loop (Survives GitHub 502 Errors)
           echo "Watching Agent Run ID: $RUN_ID. Waiting for AI to finish..."
-          gh run watch $RUN_ID || true
+          while true; do
+            # Fetch status, ignore transient 502 API errors
+            RUN_JSON=$(gh run view $RUN_ID --json status,conclusion 2>/dev/null || echo "")
+            
+            if [ -n "$RUN_JSON" ]; then
+              RUN_STATUS=$(echo "$RUN_JSON" | jq -r .status)
+              if [ "$RUN_STATUS" == "completed" ]; then
+                echo "AI Agent finished successfully!"
+                break
+              fi
+              echo "Run is $RUN_STATUS... waiting 15 seconds."
+            else
+              echo "GitHub API transient error (e.g. 502 Bad Gateway). Retrying in 15 seconds..."
+            fi
+            sleep 15
+          done
 
-          # 5. The agent finished! Ping n8n to resume the visual workflow
+          # 4. The agent finished! Ping n8n to resume the visual workflow
           curl -X POST "${{ inputs.resumeUrl }}" \
             -H "Content-Type: application/json" \
+            -H "Accept: application/json, text/plain, */*" \
             -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -H "Origin: https://github.com" \
+            -H "Referer: https://github.com/" \
             -d '{
               "status": "success",
               "github_run_id": "${{ github.run_id }}",
