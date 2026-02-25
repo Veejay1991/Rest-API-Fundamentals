@@ -1,0 +1,56 @@
+name: Activate GitHub Coding Agent
+on:
+ workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+        type: string
+      description:
+        required: true
+        type: string
+      issue_key:
+        required: true
+        type: string
+      resumeUrl:
+        type: string
+
+permissions:
+  actions: write # Required to let the GITHUB_TOKEN trigger another workflow
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+
+      - name: Run Coding Agent
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ inputs.branch }}
+          DESC: ${{ inputs.description }}
+          ISSUE_KEY: ${{ inputs.issue_key }}
+        run: |
+          # Trigger the pre-compiled, committed workflow using standard gh cli
+          gh workflow run jira-bug-fix.lock.yml -f branch="$BRANCH" -f description="$DESC" -f issue_key="$ISSUE_KEY"
+
+          # 2. Wait 5 seconds for GitHub to spin up the run
+          sleep 5
+          
+          # 3. Find the Run ID of the workflow we just started
+          RUN_ID=$(gh run list --workflow=jira-bug-fix.lock.yml --branch="$BRANCH" --limit 1 --json databaseId -q '.[0].databaseId')
+          echo "Watching Run ID: $RUN_ID"
+          
+          # 4. Block and wait for the Agent to finish (watch will exit when the PR is open)
+          gh run watch $RUN_ID || true
+
+          # 5. The agent finished! Ping n8n to resume the visual workflow
+          curl -X POST "${{ inputs.resumeUrl }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "status": "success",
+              "github_run_id": "${{ github.run_id }}",
+              "repo": "${{ github.repository }}"
+            }'

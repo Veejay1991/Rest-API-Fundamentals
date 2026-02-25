@@ -23,7 +23,7 @@
 #
 # Fixes a bug reported in Jira against a specific branch
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"1573b2e2b8eafd686faa1130413fb1d696c7d794b565e4711b3301148b47411a","compiler_version":"v0.49.3"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"db394b4ac7fcfc0d3141893219daf91eca9298e59cb1ca376b0223e95c60365e","compiler_version":"v0.49.3"}
 
 name: "jira-bug-fix"
 "on":
@@ -41,8 +41,6 @@ name: "jira-bug-fix"
         description: Jira Issue Key
         required: true
         type: string
-      resumeUrl:
-        description: n8n callback URL
 
 permissions: {}
 

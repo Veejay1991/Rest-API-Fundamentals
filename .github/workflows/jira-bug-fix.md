@@ -16,8 +16,7 @@ on:
         description: "Jira Issue Key"
         required: true
         type: string
-      resumeUrl:
-        description: "n8n callback URL"
+        
 description: Fixes a bug reported in Jira against a specific branch
 engine: copilot
 permissions:
