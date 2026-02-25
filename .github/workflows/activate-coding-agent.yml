@@ -74,6 +74,7 @@ jobs:
           done
 
           # 4. The agent finished! Ping n8n to resume the visual workflow
+          echo "Notifying n8n to resume workflow... ${{ inputs.resumeUrl }}"
           curl -X POST "${{ inputs.resumeUrl }}" \
             -H "Content-Type: application/json" \
             -H "Accept: application/json, text/plain, */*" \
