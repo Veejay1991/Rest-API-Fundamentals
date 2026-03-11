@@ -34,4 +34,10 @@ You are currently on the branch where the bug exists.
 2. Analyze the code and implement a fix for the described issue.
 3. Create a new local branch named `fix/${{ inputs.issue_key }}`.
 4. `git add` and `git commit` your changes.
-5. Use the `create_pull_request` tool to open a Pull Request.
+5. Use the `create_pull_request` tool to open a Pull Request. The PR body **must** include the following metadata block exactly as shown (substituting the actual `workflow-run-id` value from the github context):
+   ```
+   <!-- gh-aw-meta
+   jira-issue: ${{ inputs.issue_key }}
+   workflow-run-id: <workflow-run-id>
+   -->
+   ```
