@@ -75,10 +75,7 @@ jobs:
 
           # 4. The agent finished! Ping n8n to resume the visual workflow
           echo "Notifying n8n to resume workflow... ${{ inputs.resumeUrl }}"
-          curl -X POST "${{ inputs.resumeUrl }}" \
+          curl -sv -X POST "${{ inputs.resumeUrl }}" \
             -H "Content-Type: application/json" \
-            -d '{
-              "status": "success",
-              "github_run_id": "${{ github.run_id }}",
-              "repo": "${{ github.repository }}"
-            }'
+            -H "User-Agent: GitHub-Actions/${{ github.repository }}" \
+            -d '{"status":"success","github_run_id":"${{ github.run_id }}","repo":"${{ github.repository }}"}'
